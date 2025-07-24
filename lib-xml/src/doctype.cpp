@@ -5,6 +5,7 @@
 
 #define _SCL_SECURE_NO_WARNINGS
 
+#include <algorithm>
 #include <memory>
 #include <numeric>
 #include <functional>
