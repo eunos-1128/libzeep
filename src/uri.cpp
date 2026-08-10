@@ -665,8 +665,17 @@ std::string decode_url(std::string_view s)
 			if (s.end() - c >= 3)
 			{
 				int value;
-				auto r = std::from_chars(c + 1, c + 3, value, 16);
-				if (r.ec == std::errc{} and r.ptr == c + 3)
+				const char *start;
+				const char *end;
+#if _WIN32
+				start = s.data() + (c - s.begin()) + 1;
+				end = s.data() + (c - s.begin()) + 3;
+#else
+				start = c + 1;
+				end = c + 3;
+#endif
+				auto r = std::from_chars(start, end, value, 16);
+				if (r.ec == std::errc{} and r.ptr == end)
 				{
 					result += static_cast<char>(value);
 					c += 2;
