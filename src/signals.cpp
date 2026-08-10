@@ -15,6 +15,7 @@
 #include <condition_variable>
 
 #include <Windows.h>
+#include <exception>
 #include <signal.h>
 #include <wincon.h>
 
@@ -84,7 +85,7 @@ signal_catcher::signal_catcher()
 	: mImpl(nullptr)
 {
 	if (not SetConsoleCtrlHandler(&signal_catcher_impl::CtrlHandler, true))
-		throw exception("Could not install control handler");
+		throw std::exception("Could not install control handler");
 }
 
 signal_catcher::~signal_catcher()
